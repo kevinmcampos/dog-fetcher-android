@@ -12,6 +12,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="openChallengeOne"
         android:text="Challange 1:\nMigrate the repository to coroutines" />
 
     <Button
