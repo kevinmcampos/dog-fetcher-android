@@ -22,9 +22,8 @@ buildscript {
         def retrofit_version = '2.6.2'
         def truth_version = '1.0'
         def room_version = '2.2.2'
-        def dagger_version = '2.26'
         def picasso_version = '2.71828'
-        def work_version = '2.2.0'
+        def ktx_version = '1.1.0'
 
         libraries = [
                 // Kotlin standard library
@@ -44,13 +43,10 @@ buildscript {
                 "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version",
                 "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
 
-                "androidx.work:work-runtime-ktx:$work_version",
+                "androidx.core:core-ktx:$ktx_version",
 
                 // Room for database
                 "androidx.room:room-ktx:$room_version",
-
-                // Dagger
-                "com.google.dagger:dagger-android:$dagger_version",
 
                 // network & serialization
                 "com.google.code.gson:gson:$gson_version",
@@ -70,7 +66,6 @@ buildscript {
 
         librariesKapt = [
                 "androidx.room:room-compiler:$room_version",
-                "com.google.dagger:dagger-compiler:$dagger_version",
         ]
 
         librariesDebug = [
@@ -102,7 +97,6 @@ buildscript {
 
                 //  Architecture Components testing libraries
                 "androidx.arch.core:core-testing:$lifecycle_version",
-                "androidx.work:work-testing:$work_version",
 
                 // Coroutines testing
                 "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_android_version",

@@ -1,10 +1,10 @@
-package me.kevincampos.myapplication
+package com.sample.dogfetcher
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import me.kevincampos.myapplication.challenge1.LibraryOneActivity
+import com.sample.dogfetcher.challenge1.DogFetcherActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openChallengeOne(view: View) {
-        startActivity(Intent(this, LibraryOneActivity::class.java))
+        startActivity(Intent(this, DogFetcherActivity::class.java))
     }
 
 }
