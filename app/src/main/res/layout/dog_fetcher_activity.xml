@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        tools:ignore="MissingPrefix" />
+        tools:ignore="ContentDescription,MissingPrefix" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -19,12 +19,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp" />
 
+    <TextView
+        android:id="@+id/breeds_list_text"
+        android:layout_width="match_parent"
+        android:minLines="3"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:text="German Shepherd (87%)" />
+
     <Button
         android:id="@+id/fetch_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:height="64dp"
         android:layout_margin="16dp"
+        android:height="64dp"
         android:text="Fetch new dog!"
         tools:ignore="HardcodedText" />
 
