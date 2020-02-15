@@ -3,6 +3,7 @@ package com.sample.dogfetcher.repository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class DogRepository constructor(
     private val dogApi: DogApi
@@ -14,9 +15,12 @@ class DogRepository constructor(
                 call: Call<DogResponse>,
                 response: Response<DogResponse>
             ) {
-                val dogUrl = response.body()!!.message
-
-                onCompleted(dogUrl)
+                if (response.isSuccessful) {
+                    val dogResponse = requireNotNull(response.body())
+                    onCompleted(dogResponse.message)
+                } else {
+                    onError(IOException("${response.errorBody()}"))
+                }
             }
 
             override fun onFailure(call: Call<DogResponse>, t: Throwable) {

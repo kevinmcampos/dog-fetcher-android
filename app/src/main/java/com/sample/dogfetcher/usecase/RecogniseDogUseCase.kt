@@ -1,12 +1,16 @@
 package com.sample.dogfetcher.usecase
 
 import android.content.Context
+import androidx.annotation.WorkerThread
 import com.sample.dogfetcher.R
 import com.sample.dogfetcher.breedsclassifier.Classifier
 import com.sample.dogfetcher.breedsclassifier.TensorFlowImageClassifier
 import com.sample.dogfetcher.model.BreedRecognition
 import com.squareup.picasso.Picasso
 
+/**
+ * Copied from https://github.com/j05t/dbclf
+ */
 class RecogniseDogUseCase(
     context: Context
 ) {
@@ -23,6 +27,7 @@ class RecogniseDogUseCase(
         private const val MODEL_FILE = "stripped.pb"
     }
 
+    @WorkerThread
     fun invoke(dogImageUrl: String): List<BreedRecognition> {
         val dogBitmap = Picasso.get()
             .load(dogImageUrl)

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import com.sample.dogfetcher.viewmodel.DogFetcherViewModel
 import com.sample.dogfetcher.viewmodel.DogViewModelFactory
 import com.squareup.picasso.Picasso
@@ -28,7 +29,6 @@ class DogFetcherActivity : AppCompatActivity() {
         viewModel.dogUrl.observe(this, Observer { dogUrl ->
             Picasso.get()
                 .load(dogUrl)
-                .noPlaceholder()
                 .into(dog_image_view)
         })
         viewModel.dogRecognitionText.observe(this, Observer {
@@ -36,6 +36,12 @@ class DogFetcherActivity : AppCompatActivity() {
         })
         viewModel.isLoading.observe(this, Observer { isLoading ->
             loading.isInvisible = !isLoading
+            fetch_button.isEnabled = !isLoading
+        })
+        viewModel.showError.observe(this, Observer { event ->
+            event.runIfNotHandled { errorMessage ->
+                Snackbar.make(container, errorMessage, Snackbar.LENGTH_SHORT).show()
+            }
         })
 
         fetch_button.setOnClickListener {

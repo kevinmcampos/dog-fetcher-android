@@ -14,6 +14,7 @@ import java.util.PriorityQueue;
 import java.util.Vector;
 
 /**
+ * Copied from https://github.com/j05t/dbclf
  * A classifier specialized to label images using TensorFlow.
  */
 public class TensorFlowImageClassifier implements Classifier {

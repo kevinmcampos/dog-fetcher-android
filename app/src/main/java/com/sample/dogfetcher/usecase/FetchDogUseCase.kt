@@ -12,7 +12,7 @@ class FetchDogUseCase(
 
     operator fun invoke(onCompleted: (DogInfo) -> Unit, onError: (Throwable) -> Unit) {
         dogRepository.getRandomDogImage({ dogImageUrl ->
-            BACKGROUND.execute {
+            BACKGROUND.submit {
                 val breeds = classifyDogUseCase.invoke(dogImageUrl)
 
                 onCompleted(

@@ -18,6 +18,7 @@ limitations under the License.
 ==============================================================================*/
 
 /**
+ * Copied from https://github.com/j05t/dbclf
  * Generic interface for interacting with different recognition engines.
  */
 interface Classifier {
@@ -68,4 +69,5 @@ interface Classifier {
     }
 
     fun recognizeImage(bitmap: Bitmap): List<Recognition>
+
 }

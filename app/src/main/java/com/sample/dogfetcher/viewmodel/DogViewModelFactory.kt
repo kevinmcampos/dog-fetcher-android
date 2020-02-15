@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.dogfetcher.repository.DogApi
 import com.sample.dogfetcher.repository.DogRepository
-import com.sample.dogfetcher.repository.ThrottleNetworkSpeedInterceptor
+import com.sample.dogfetcher.repository.FakeNetworkErrorInterceptor
 import com.sample.dogfetcher.usecase.FetchDogUseCase
 import com.sample.dogfetcher.usecase.RecogniseDogUseCase
 import okhttp3.OkHttpClient
@@ -41,7 +41,7 @@ class DogViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
     private val dogApi: DogApi by lazy {
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(ThrottleNetworkSpeedInterceptor())
+            .addInterceptor(FakeNetworkErrorInterceptor())
             .build()
 
         val retrofit = Retrofit.Builder()
