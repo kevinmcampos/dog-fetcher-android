@@ -10,8 +10,6 @@ local.properties
 .checkstyle
 .DS_Store
 .idea/*
-!.idea/codeStyles
-!.idea/codeInsightSettings.xml
 .gradle
 build/
 *.iml
