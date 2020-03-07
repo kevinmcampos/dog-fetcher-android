@@ -7,6 +7,7 @@ import com.sample.dogfetcher.usecase.FetchDogUseCase
 import com.sample.dogfetcher.utils.Event
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.rx2.rxSingle
 
 class DogFetcherViewModel(
     private val fetchDogInfoUseCase: FetchDogUseCase
@@ -22,7 +23,7 @@ class DogFetcherViewModel(
     fun fetchNewDog() {
         isLoading.postValue(true)
 
-        disposable = fetchDogInfoUseCase()
+        disposable = rxSingle { fetchDogInfoUseCase() }
             .subscribeOn(Schedulers.io())
             .subscribe({ dogInfo ->
                 dogUrl.postValue(dogInfo.dogImageUrl)
