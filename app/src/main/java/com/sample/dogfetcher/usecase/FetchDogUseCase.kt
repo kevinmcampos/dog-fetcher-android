@@ -10,6 +10,16 @@ class FetchDogUseCase(
     private val dogRepository: DogRepository
 ) {
 
+    suspend fun invokeSuspend(): DogInfo {
+        val dogImageUrl = dogRepository.getRandomDogImageSuspend()
+        val breeds = classifyDogUseCase.invokeSuspend(dogImageUrl)
+
+        return DogInfo(
+            dogImageUrl = dogImageUrl,
+            breedRecognitionList = breeds
+        )
+    }
+
     operator fun invoke(onCompleted: (DogInfo) -> Unit, onError: (Throwable) -> Unit) {
         dogRepository.getRandomDogImage({ dogImageUrl ->
             BACKGROUND.submit {

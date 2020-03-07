@@ -9,6 +9,10 @@ class DogRepository constructor(
     private val dogApi: DogApi
 ) {
 
+    suspend fun getRandomDogImageSuspend(): String {
+        return dogApi.getRandomDogImageSuspend().message
+    }
+
     fun getRandomDogImage(onCompleted: (String) -> Unit, onError: (Throwable) -> Unit) {
         dogApi.getRandomDogImage().enqueue(object : Callback<DogResponse> {
             override fun onResponse(

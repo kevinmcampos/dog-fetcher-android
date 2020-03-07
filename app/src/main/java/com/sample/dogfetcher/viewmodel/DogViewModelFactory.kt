@@ -20,7 +20,8 @@ class DogViewModelFactory(context: Context) : ViewModelProvider.Factory {
             throw IllegalArgumentException("Unknown ViewModel class")
         }
         return DogFetcherViewModel(
-            fetchDogUseCase
+            fetchDogUseCase,
+            dogApi
         ) as T
     }
 
