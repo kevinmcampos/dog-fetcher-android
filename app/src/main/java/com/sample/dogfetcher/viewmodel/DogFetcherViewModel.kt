@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sample.dogfetcher.usecase.FetchDogUseCase
 import com.sample.dogfetcher.utils.Event
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class DogFetcherViewModel(
     private val fetchDogInfoUseCase: FetchDogUseCase
@@ -15,10 +17,14 @@ class DogFetcherViewModel(
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val showError = MutableLiveData<Event<String>>()
 
+    private var disposable: Disposable? = null
+
     fun fetchNewDog() {
         isLoading.postValue(true)
 
-        fetchDogInfoUseCase.invoke({ dogInfo ->
+        disposable = fetchDogInfoUseCase()
+            .subscribeOn(Schedulers.io())
+            .subscribe({ dogInfo ->
                 dogUrl.postValue(dogInfo.dogImageUrl)
                 dogRecognitionText.postValue(dogInfo.breedsToText())
                 isLoading.postValue(false)
@@ -26,8 +32,11 @@ class DogFetcherViewModel(
                 Log.e("DogFetcherViewModel", "Unable to fetch a dog", throwable)
                 isLoading.postValue(false)
                 showError.postValue(Event("Unable to fetch a dog"))
-            }
-        )
+            })
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        disposable?.dispose()
+    }
 }

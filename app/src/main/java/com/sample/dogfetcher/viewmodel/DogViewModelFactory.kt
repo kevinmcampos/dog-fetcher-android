@@ -10,6 +10,7 @@ import com.sample.dogfetcher.usecase.FetchDogUseCase
 import com.sample.dogfetcher.usecase.RecogniseDogUseCase
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class DogViewModelFactory(context: Context) : ViewModelProvider.Factory {
@@ -48,6 +49,7 @@ class DogViewModelFactory(context: Context) : ViewModelProvider.Factory {
             .baseUrl("https://dog.ceo/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
         retrofit.create(DogApi::class.java)

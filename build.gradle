@@ -53,6 +53,7 @@ buildscript {
                 "com.google.code.gson:gson:$gson_version",
                 "com.squareup.retrofit2:converter-gson:$retrofit_gson_version",
                 "com.squareup.retrofit2:retrofit:$retrofit_version",
+                "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
 
                 // Image loading
                 "com.squareup.picasso:picasso:$picasso_version",
