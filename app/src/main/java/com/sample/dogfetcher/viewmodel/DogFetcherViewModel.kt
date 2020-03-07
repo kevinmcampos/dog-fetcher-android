@@ -3,10 +3,14 @@ package com.sample.dogfetcher.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sample.dogfetcher.usecase.FetchDogUseCase
 import com.sample.dogfetcher.utils.Event
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.rx2.await
+import kotlinx.coroutines.withContext
 
 class DogFetcherViewModel(
     private val fetchDogInfoUseCase: FetchDogUseCase
@@ -22,17 +26,23 @@ class DogFetcherViewModel(
     fun fetchNewDog() {
         isLoading.postValue(true)
 
-        disposable = fetchDogInfoUseCase()
-            .subscribeOn(Schedulers.io())
-            .subscribe({ dogInfo ->
+        viewModelScope.launch {
+            try {
+                // Another option
+                // val dogInfo = fetchDogInfoUseCase().subscribeOn(Schedulers.io()).await()
+
+                val dogInfo = withContext(Dispatchers.IO) {
+                    fetchDogInfoUseCase().await()
+                }
                 dogUrl.postValue(dogInfo.dogImageUrl)
                 dogRecognitionText.postValue(dogInfo.breedsToText())
                 isLoading.postValue(false)
-            }, { throwable ->
-                Log.e("DogFetcherViewModel", "Unable to fetch a dog", throwable)
+            } catch (e: Exception) {
+                Log.e("DogFetcherViewModel", "Unable to fetch a dog", e)
                 isLoading.postValue(false)
                 showError.postValue(Event("Unable to fetch a dog"))
-            })
+            }
+        }
     }
 
     override fun onCleared() {
